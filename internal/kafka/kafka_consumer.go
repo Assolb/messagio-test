@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/segmentio/kafka-go"
 	"github.com/sirupsen/logrus"
-	"log"
 	"messagio/internal/repository"
 	"strconv"
 )
@@ -33,15 +32,15 @@ func (kc *KafkaConsumer) ReadMessages() {
 
 		messageID, err := strconv.Atoi(string(msg.Key))
 		if err != nil {
-			log.Printf("Error converting message ID: %v", err)
+			logrus.Printf("Error converting message ID: %v", err)
 			continue
 		}
 		messageText := string(msg.Value)
 
-		log.Printf("Received message: ID=%s, Text=%s", messageID, messageText)
+		logrus.Printf("Received message: ID=%s, Text=%s", messageID, messageText)
 
 		if err := kc.Repo.UpdateMessageStatus(messageID, "processed"); err != nil {
-			log.Printf("Error updating message status: %v", err)
+			logrus.Printf("Error updating message status: %v", err)
 		}
 		logrus.Printf("Received message: %s", string(msg.Value))
 	}

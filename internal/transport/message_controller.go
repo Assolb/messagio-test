@@ -16,10 +16,9 @@ func NewMessageController(ms *service.MessageService) *MessageController {
 	}
 }
 
-func (dr *MessageController) registryProvider(router *gin.Engine) {
-	router.POST("/api/v1/message/add", dr.addMessage)
-	router.GET("/api/v1/message/stats", dr.getMessageStats)
-
+func (mc *MessageController) registryProvider(router *gin.Engine) {
+	router.POST("/api/v1/message/add", mc.addMessage)
+	router.GET("/api/v1/message/stats", mc.getMessageStats)
 }
 
 func (mc *MessageController) addMessage(c *gin.Context) {
